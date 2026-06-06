@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "char-gpt"
+version = "0.1.0"
+description = "A tiny, from-scratch character-level GPT in pure PyTorch — multi-head causal self-attention, position-wise MLP, weight-tied embeddings — trained on Shakespeare."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Sarthak Jain" }]
+keywords = ["gpt", "transformer", "language-model", "from-scratch", "pytorch", "shakespeare"]
+dependencies = ["torch>=2.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+char-gpt = "char_gpt.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["char_gpt*"]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+"char_gpt.data" = ["*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
