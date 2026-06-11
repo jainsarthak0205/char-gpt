@@ -20,3 +20,5 @@ Thumbs.db
 checkpoints/
 *.pt
 *.pth
+# but ship the demo checkpoint so the HF Space can load without re-training
+!checkpoints/char_gpt.pt
