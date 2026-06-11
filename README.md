@@ -1,6 +1,20 @@
+---
+title: char-gpt
+emoji: 🎭
+colorFrom: indigo
+colorTo: purple
+sdk: gradio
+sdk_version: 4.44.0
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # char-gpt
 
 > **A tiny GPT, built from scratch in pure PyTorch, trained on Shakespeare.**
+
+**Live demo:** <https://huggingface.co/spaces/jainsarthak0205/char-gpt>
 
 No `transformers` library, no pretrained weights — just one short file
 that implements multi-head causal self-attention, a position-wise MLP,
