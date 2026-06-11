@@ -17,8 +17,9 @@ venv/
 Thumbs.db
 
 # checkpoints can be a few MB; let users re-train
-checkpoints/
+checkpoints/*
 *.pt
 *.pth
-# but ship the demo checkpoint so the HF Space can load without re-training
+# but allow the demo checkpoint past gitignore (uploaded to the HF Space
+# via xet — never committed to git, so GitHub stays binary-free)
 !checkpoints/char_gpt.pt
