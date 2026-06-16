@@ -40,19 +40,24 @@ with gr.Blocks(title="char-gpt") as demo:
         """
 # char-gpt
 
-A tiny decoder-only transformer (~810k params) built from scratch in PyTorch
-and trained on tiny-Shakespeare. No `transformers` library — just causal
-multi-head self-attention, pre-norm residual blocks, weight-tied embeddings,
-and AdamW + cosine LR.
+A tiny decoder-only transformer built from scratch in PyTorch and trained
+on **Pride and Prejudice** (Jane Austen, public domain, ~694k characters).
+No `transformers` library — just causal multi-head self-attention,
+pre-norm residual blocks, weight-tied embeddings, and AdamW + cosine LR.
+
+Sub-million-parameter character-level models can't follow instructions
+or answer questions. They learn the *statistical shape* of the training
+text — spelling, common words, sentence cadence. Expect plausible-looking
+English with no plot coherence.
 
 Source: <https://github.com/jainsarthak0205/char-gpt>
         """
     )
     with gr.Row():
         with gr.Column():
-            prompt = gr.Textbox(label="Prompt", value="ROMEO:", lines=2)
+            prompt = gr.Textbox(label="Prompt", value="Mr. Darcy", lines=2)
             max_new_tokens = gr.Slider(20, 600, value=300, step=10, label="Max new tokens")
-            temperature = gr.Slider(0.1, 2.0, value=0.9, step=0.05, label="Temperature")
+            temperature = gr.Slider(0.1, 2.0, value=0.8, step=0.05, label="Temperature")
             top_k = gr.Slider(0, 100, value=40, step=1, label="Top-k (0 = off)")
             btn = gr.Button("Generate", variant="primary")
         with gr.Column():
@@ -60,10 +65,10 @@ Source: <https://github.com/jainsarthak0205/char-gpt>
     btn.click(sample, [prompt, max_new_tokens, temperature, top_k], output)
     gr.Examples(
         examples=[
-            ["ROMEO:", 300, 0.9, 40],
-            ["JULIET:\nO Romeo,", 300, 0.8, 40],
-            ["KING HENRY:", 300, 1.0, 40],
-            ["To be, or not to be,", 200, 0.85, 40],
+            ["Mr. Darcy", 300, 0.8, 40],
+            ["Elizabeth was", 300, 0.8, 40],
+            ["It is a truth universally acknowledged,", 300, 0.7, 40],
+            ["My dear Mr. Bennet,", 300, 0.85, 40],
         ],
         inputs=[prompt, max_new_tokens, temperature, top_k],
     )

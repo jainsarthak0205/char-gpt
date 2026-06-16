@@ -11,9 +11,15 @@ from torch.utils.data import Dataset
 from .tokenizer import CharTokenizer
 
 
-def load_bundled_corpus() -> str:
-    """Return the bundled Shakespeare corpus as a single string."""
-    path = resources.files("char_gpt.data").joinpath("tiny_shakespeare.txt")
+def load_bundled_corpus(name: str = "pride_and_prejudice") -> str:
+    """Return a bundled corpus as a single string.
+
+    Available corpora:
+    - ``"pride_and_prejudice"`` (default) — Jane Austen, ~694k chars of modern English prose
+    - ``"tiny_shakespeare"`` — Karpathy's classic, ~1.1M chars of Elizabethan verse
+    """
+    filename = f"{name}.txt"
+    path = resources.files("char_gpt.data").joinpath(filename)
     return path.read_text(encoding="utf-8")
 
 

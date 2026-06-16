@@ -13,15 +13,15 @@ license: mit
 
 # char-gpt
 
-> **A tiny GPT, built from scratch in pure PyTorch, trained on Shakespeare.**
+> **A tiny GPT, built from scratch in pure PyTorch, trained on a Jane Austen novel.**
 
 **Live demo:** <https://huggingface.co/spaces/jainsarthak0205/char-gpt>
 
 No `transformers` library, no pretrained weights — just one short file
 that implements multi-head causal self-attention, a position-wise MLP,
 pre-norm residual blocks, weight-tied token embeddings, and a top-k
-nucleus-free sampler. Train it on a laptop CPU in a few minutes and
-generate text that vaguely sounds like Shakespeare.
+sampler. Train it on a laptop CPU in a few minutes and generate text
+that reads like a (very small) Austen.
 
 ## Why this exists
 
@@ -37,7 +37,8 @@ char_gpt/
 ├── sample.py       # checkpoint loader + autoregressive sampler
 ├── cli.py          # python -m char_gpt {train,sample,info}
 └── data/
-    └── tiny_shakespeare.txt   # 1.1 MB, ~40k lines of bard
+    ├── pride_and_prejudice.txt  # 694k chars, Jane Austen (default)
+    └── tiny_shakespeare.txt     # 1.1 MB, Karpathy's classic corpus
 ```
 
 ## Install
@@ -49,32 +50,24 @@ pip install -r requirements-dev.txt    # + pytest
 
 ## Quick start
 
-Train a tiny model on the bundled Shakespeare corpus (a few minutes on CPU):
+Train a tiny model on the bundled Pride and Prejudice corpus:
 
 ```bash
-python -m char_gpt train --max-iters 2000
+python -m char_gpt train --block-size 128 --max-iters 3000
 ```
 
 Then sample from it:
 
 ```bash
-python -m char_gpt sample --prompt "ROMEO:" --max-new-tokens 400 --temperature 0.9
+python -m char_gpt sample --prompt "Mr. Darcy" --max-new-tokens 400 --temperature 0.8
 ```
 
-After a couple of minutes of training you should see output along the lines of:
+After ~20 minutes of CPU training the output looks like (very-small-model)
+Austen: real English words, somewhat sensible sentence structure, no real
+plot coherence — a character-level model with under a million parameters
+can only do so much.
 
-```
-ROMEO:
-I will have not to spreak of his fair countenance,
-And by my hand to her have I would not be,
-But I will not have to seek my tongue.
-
-JULIET:
-Then I will be the sun of this world,
-And let the world be the world that I have seen.
-```
-
-(Real samples will vary — small models on a small corpus are noisy.)
+(Want Shakespeare instead? `--corpus char_gpt/data/tiny_shakespeare.txt`.)
 
 Inspect a checkpoint:
 
